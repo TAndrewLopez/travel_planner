@@ -3,17 +3,21 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { apiClient, handleError } from "@/lib";
+import { apiClient } from "@/lib";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { ADMIN_API_ROUTES } from "@/routes";
+import { useAppStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 interface LoginPageProps { }
 
 const LoginPage: React.FC<LoginPageProps> = ({ }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { setUserInfo } = useAppStore();
+    const router = useRouter()
 
     const handleLogin = async () => {
         try {
@@ -22,9 +26,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ }) => {
                 password,
             });
             if (response.data.userInfo) {
+                setUserInfo(response.data.userInfo)
+                router.push('/admin');
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
 
