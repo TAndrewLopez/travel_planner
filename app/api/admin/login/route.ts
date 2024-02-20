@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { SHA256 as sha256 } from "crypto-js";
 
-import { createAdminToken, db } from "@/lib";
+import { createAdminToken } from "@/lib";
+import { db } from "@/lib/prisma";
 
 export const POST = async (req: Request) => {
     try {

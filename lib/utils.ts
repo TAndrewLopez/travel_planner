@@ -27,3 +27,12 @@ export const handleError = (error: unknown) => {
         throw new Error(`Unknown Error: ${JSON.stringify(error)}`);
     }
 };
+
+// DEBOUNCE
+export const debounce = (callback: (...args: any[]) => void, delay: number) => {
+    let timeoutID: NodeJS.Timeout | null;
+    return (...args: any[]) => {
+        if (timeoutID) clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => callback.apply(null, args), delay);
+    };
+};
