@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
@@ -10,6 +10,7 @@ import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { Input } from "@nextui-org/input";
 import { apiClient } from "@/lib";
 import { ADMIN_API_ROUTES } from "@/routes";
+import { CurrentScrapingTable, ScrapingQueue } from "@/components/admin/scrapingQueue";
 
 interface ScrapeDataPageProps { }
 
@@ -18,6 +19,7 @@ const ScrapeDataPage: React.FC<ScrapeDataPageProps> = ({ }) => {
     const [selectedCity, setSelectedCity] = useState<string | undefined>(
         undefined
     );
+    const [jobs, setJobs] = useState([])
 
     const searchCities = async (searchQuery: string) => {
         const response = await axios.get(
@@ -34,6 +36,17 @@ const ScrapeDataPage: React.FC<ScrapeDataPageProps> = ({ }) => {
             jobType: { type: "location" },
         });
     };
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+            setJobs(response.data.jobs);
+        }
+        const interval = setInterval(() => getData(), 3000);
+        return () => {
+            clearInterval(interval);
+        }
+    }, [])
 
     return (
         <section className="m-10 grid grid-cols-3 gap-5">
@@ -78,6 +91,10 @@ const ScrapeDataPage: React.FC<ScrapeDataPageProps> = ({ }) => {
                     </Button>
                 </CardFooter>
             </Card>
+            <ScrapingQueue />
+            <div className="col-span-3">
+                <CurrentScrapingTable jobs={jobs} />
+            </div>
         </section>
     );
 };

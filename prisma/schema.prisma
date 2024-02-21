@@ -20,16 +20,16 @@ model Admin {
 
 enum JobStatus {
   active
-  processing
+  failed
   complete
 }
 
 model Job {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   url        String
-  isComplete Boolean  @default(false)
-  status     String   @default("active")
+  isComplete Boolean   @default(false)
+  status     JobStatus @default(active)
   jobType    Json
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }

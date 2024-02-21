@@ -10,6 +10,6 @@ export const MENU_ITEMS = [
     {
         label: "Scrape Data",
         icon: <MdOutlineDataUsage />,
-        link: "/admin/scrape-data",
+        link: "/admin/scrapeData",
     },
 ];

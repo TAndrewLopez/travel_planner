@@ -4,3 +4,4 @@ export interface UserType {
     lastName: string;
     email: string;
 }
+

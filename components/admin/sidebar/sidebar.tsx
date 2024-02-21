@@ -2,8 +2,9 @@
 
 import { Inter } from "next/font/google";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
+
 import {
     Menu,
     MenuItem,
@@ -11,7 +12,6 @@ import {
     sidebarClasses,
 } from "react-pro-sidebar";
 import { LuLogOut } from "react-icons/lu";
-
 import { MENU_ITEMS } from "@/constants";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +19,8 @@ const inter = Inter({ subsets: ["latin"] });
 interface SidebarProps { }
 
 export const Sidebar: React.FC<SidebarProps> = ({ }) => {
-    const [selectedItem, setSelectedItem] = useState("/admin/dashboard");
+    const pathname = usePathname()
+    const [selectedItem, setSelectedItem] = useState(pathname);
     const router = useRouter();
 
     const handleItemClick = (link: string) => {
