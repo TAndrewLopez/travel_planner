@@ -52,11 +52,11 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
     const headerColumns = COLUMNS;
 
     const filteredItems = useMemo(() => {
-        let filteredUsers = jobs;
+        let filteredJobs = jobs;
 
         if (hasSearchFilter) {
-            filteredUsers = filteredUsers.filter((user) =>
-                user.url.toLowerCase().includes(filterValue.toLowerCase())
+            filteredJobs = filteredJobs.filter((job) =>
+                job.url.toLowerCase().includes(filterValue.toLowerCase())
             );
         }
 
@@ -64,12 +64,12 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
             statusFilter !== "all" &&
             Array.from(statusFilter).length !== STATUS_OPTIONS.length
         ) {
-            filteredUsers = filteredUsers.filter((user) =>
-                Array.from(statusFilter).includes(user.status)
+            filteredJobs = filteredJobs.filter((job) =>
+                Array.from(statusFilter).includes(job.status)
             );
         }
 
-        return filteredUsers;
+        return filteredJobs;
     }, [jobs, hasSearchFilter, statusFilter, filterValue]);
 
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -79,8 +79,8 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
 
-    const renderCell = useCallback((user: JobType, columnKey: Key) => {
-        const cellValue = user[columnKey as keyof JobType];
+    const renderCell = useCallback((job: JobType, columnKey: Key) => {
+        const cellValue = job[columnKey as keyof JobType];
 
         const formatDateAndTime = (inputDate: string) => {
             const date = new Date(inputDate);
@@ -117,7 +117,7 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
                 return (
                     <Chip
                         className="capitalize"
-                        color={STATUS_COLOR_MAP[user.status]}
+                        color={STATUS_COLOR_MAP[job.status]}
                         size="sm"
                         variant="flat">
                         {cellValue}
@@ -196,7 +196,7 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
                 </div>
                 <div className="flex justify-between items-center">
                     <span className="text-default-400 text-small">
-                        Total {jobs.length} jobs
+                        {jobs.length} jobs total
                     </span>
                     <label className="flex items-center text-default-400 text-small">
                         Rows per page:
@@ -291,18 +291,14 @@ export const CurrentScrapingTable: React.FC<CurrentScrapingTableProps> = ({
                     </TableColumn>
                 )}
             </TableHeader>
-            <TableBody emptyContent={'No jobs found'} items={items}>
-                {
-                    (item) => (
-                        <TableRow key={item.id}>
-                            {(columnKey) => (
-                                <TableCell>
-                                    {renderCell(item, columnKey)}
-                                </TableCell>
-                            )}
-                        </TableRow>
-                    )
-                }
+            <TableBody emptyContent={"No jobs found"} items={items}>
+                {(item) => (
+                    <TableRow key={item.id}>
+                        {(columnKey) => (
+                            <TableCell>{renderCell(item, columnKey)}</TableCell>
+                        )}
+                    </TableRow>
+                )}
             </TableBody>
         </Table>
     );
