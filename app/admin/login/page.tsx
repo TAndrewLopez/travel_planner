@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { apiClient } from "@/lib";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { ADMIN_API_ROUTES } from "@/routes";
 import { useAppStore } from "@/store";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface LoginPageProps { }
 
@@ -21,7 +21,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
+            const response = await axios.post(ADMIN_API_ROUTES.LOGIN, {
                 email,
                 password,
             });

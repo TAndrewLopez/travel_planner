@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { apiClient } from "@/lib";
 import { ADMIN_API_ROUTES } from "@/routes";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import axios from "axios";
 
 interface ScrapingQueueProps { }
 
@@ -13,7 +13,7 @@ export const ScrapingQueue: React.FC<ScrapingQueueProps> = ({ }) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+            const response = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
             setActiveJobs(response.data.activeJobs);
         };
 

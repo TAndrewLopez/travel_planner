@@ -31,7 +31,7 @@ const ScrapeDataPage: React.FC<ScrapeDataPageProps> = ({ }) => {
     };
 
     const startScraping = async () => {
-        const response = await apiClient.post(ADMIN_API_ROUTES.CREATE_JOB, {
+        const response = await axios.post(ADMIN_API_ROUTES.CREATE_JOB, {
             url: `https://packages.yatra.com/holidays/intl/search.htm?destination=${selectedCity}`,
             jobType: { type: "location" },
         });
@@ -39,7 +39,7 @@ const ScrapeDataPage: React.FC<ScrapeDataPageProps> = ({ }) => {
 
     useEffect(() => {
         const getData = async () => {
-            const response = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+            const response = await axios.get(ADMIN_API_ROUTES.JOB_DETAILS);
             setJobs(response.data.jobs);
         }
         const interval = setInterval(() => getData(), 3000);
