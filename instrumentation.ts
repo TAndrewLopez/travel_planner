@@ -21,7 +21,7 @@ export const register = async () => {
                     const page = await browser.newPage();
                     if (job.data.jobType.type === "location") {
                         console.log("Connected! Navigating to", job.data.url);
-                        await page.goto(job.data.url, { timeout: 60000 });
+                        await page.goto(job.data.url, { timeout: 10000 });
                         console.log("Navigated! Scraping page content...");
                         const packages = await startLocationScraping(page);
                         console.log({ packages });
