@@ -8,7 +8,6 @@ import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { Input } from "@nextui-org/input";
-import { apiClient } from "@/lib";
 import { ADMIN_API_ROUTES } from "@/routes";
 import { CurrentScrapingTable, ScrapingQueue } from "@/components/admin/scrapingQueue";
 

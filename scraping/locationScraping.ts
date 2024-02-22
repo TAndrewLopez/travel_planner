@@ -1,13 +1,6 @@
 import { Page } from "puppeteer";
 
-interface PackageInfo {
-    id: string | null;
-    name: string;
-    nights: number;
-    days: number;
-    inclusions: string[];
-    price: number;
-}
+import { PackageInfo } from "@/types/packageInfo";
 
 export const startLocationScraping = async (
     page: Page
@@ -58,8 +51,10 @@ export const startLocationScraping = async (
             );
             packageInfo.inclusions = inclusionItems;
 
-            const priceElement = packageElement.querySelector('.final-price .amount');
-            packageInfo.price = parseInt(priceElement?.textContent?.replace(/,/g, "") || "0")
+            const priceElement = packageElement.querySelector(".final-price .amount");
+            packageInfo.price = parseInt(
+                priceElement?.textContent?.replace(/,/g, "") || "0"
+            );
 
             packages.push(packageInfo);
         });
